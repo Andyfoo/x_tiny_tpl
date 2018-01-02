@@ -1,12 +1,18 @@
 # x_tiny_tpl
-php模板
+这是一个php模板class，之前我一直使用(Ease Template：[http://www.systn.com/data/et/1.html](http://www.systn.com/data/et/1.html "http://www.systn.com/data/et/1.html"))，后因不支持php7，然后就重写了。
+x_tiny_tpl和Ease Template语法类似，功能相对少了一些，主要是自用，因现在不经常用php，所以维护不及时。
+
+感谢Ease Template作者，希望他能继续更新下去。
+
+
 php版本：php5.3以上
+**x_tiny_tpl文件小，运行速度快。支持模板变量、循环、判断、php函数、php代码段。**
 使用说明请查看：doc.html
 
 
 
 ----------
-PHP调用示例
+**PHP调用示例**
     `
 
 		<?php
