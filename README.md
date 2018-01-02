@@ -1,6 +1,7 @@
 # x_tiny_tpl
 这是一个php模板class，之前我一直使用(Ease Template：[http://www.systn.com/data/et/1.html](http://www.systn.com/data/et/1.html "http://www.systn.com/data/et/1.html"))，后因不支持php7，然后就重写了。
-x_tiny_tpl和Ease Template语法类似，功能相对少了一些，主要是自用，因现在不经常用php，所以维护不及时。
+
+x_tiny_tpl和Ease Template语法类似，功能相对少了一些，主要是自用，因现在不经常用php，所以维护不及时，请谅解。
 
 
 感谢Ease Template作者，希望他能继续更新下去。
