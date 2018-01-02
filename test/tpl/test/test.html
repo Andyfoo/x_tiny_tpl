@@ -1,0 +1,212 @@
+<!-- #include file="/inc/header.html" -->
+<div class="item">
+	<div class="title">PHP调用示例</div>
+
+
+	<div class="info">
+		<pre class="code">
+&lt;?php
+include(&#x27;lib/XTinyTpl.class.php&#x27;);
+$tpl = new XTinyTpl(array(
+	&#x27;rootPath&#x27; =&gt; dirname(__FILE__),
+	&#x27;webPath&#x27; =&gt; &#x27;/test/xtpl&#x27;,
+	&#x27;tplPath&#x27; =&gt; &#x27;tpl&#x27;,
+	&#x27;cachePath&#x27; =&gt; &#x27;cache&#x27;,
+	&#x27;extName&#x27; =&gt; &#x27;.html&#x27;,
+	&#x27;regGlobal&#x27; =&gt; true,
+	&#x27;mergeInclude&#x27; =&gt; false
+));
+
+$list = array(
+	array(
+		&#x27;name&#x27; =&gt; &#x27;张三&#x27;,
+		&#x27;list&#x27; =&gt; array(
+			array(
+				&#x27;sub_name&#x27; =&gt; &#x27;aaa1&#x27;
+			),
+			array(
+				&#x27;sub_name&#x27; =&gt; &#x27;aaa2&#x27;
+			)
+		)
+	),
+	array(
+		&#x27;name&#x27; =&gt; &#x27;李四&#x27;,
+		&#x27;list&#x27; =&gt; array(
+			array(
+				&#x27;sub_name&#x27; =&gt; &#x27;bbb1&#x27;
+			),
+			array(
+				&#x27;sub_name&#x27; =&gt; &#x27;bbb2&#x27;
+			)
+		)
+	)
+);
+$tpl-&gt;setVar(&#x27;a&#x27;, 1);
+$tpl-&gt;setVar($list);
+$tpl-&gt;setVar(   
+	array(  
+		&#x27;var1&#x27;=&gt;&#x27;123456&#x27;,   
+		&#x27;var2&#x27;=&gt;&#x27;abcdefg&#x27;,
+	)
+);
+
+
+$tpl-&gt;out(&#x27;test/test&#x27;);
+		</pre>
+	</div>
+</div>
+<div class="item">
+	<div class="title">变量</div>
+
+
+	<div class="info">
+		<pre class="code">
+变量1:{&#36;var1}<br>
+变量2:{&#36;var1}<br>
+变量3(可调用函数):&#36;{substr($var1, 0, 3)}
+		</pre>
+		<div class="preview">
+			变量1:{$var1}<br>
+			变量2:{$var2}-${var2}<br>
+			变量2:${substr($var1, 0, 3)}
+		</div>	
+	</div>
+</div>
+
+<div class="item">
+	<div class="title">循环</div>
+	<div class="info">
+		<pre class="code">
+支持2种方式循环：
+<div class="code_sub">foreach和while</div>
+&lt;ul&gt;
+&lt;!-- $list AS $k =&gt; $v --&gt;
+	&lt;li&gt;&#36;$&#123;k}--&#36;{v[&#x27;name&#x27;]}
+		&lt;ul&gt;
+		&lt;!-- &#36;list AS &#36;v2 --&gt;
+			&lt;li&gt;	&#36;{v2[&#x27;name&#x27;]}&lt;/li&gt;
+		&lt;!-- end --&gt;
+		&lt;/ul&gt;
+	&lt;/li&gt;
+&lt;!-- end --&gt;
+&lt;/ul&gt;
+
+&lt;!-- while:$i&lt;10 --&gt;  
+	&lt;!--{$i++;}--&gt;
+	$&#123;i},
+&lt;!-- end --&gt;
+		</pre>
+		<div class="preview">
+			<ul>
+			<!-- $list AS $k => $v -->
+				<li>${k}--${v['name']}
+					<ul>
+					<!-- $list AS $v2 -->
+						<li>	${v2['name']}</li>
+					<!-- end -->
+					</ul>
+				</li>
+			<!-- end -->
+			</ul>
+
+			<!-- while:$i<10 -->  
+				<!--{$i++;}-->
+				${i},
+			<!-- end -->
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="title">逻辑判断</div>
+	<div class="info">
+		<pre class="code">
+&lt;!-- IF[$a==1] --&gt;   
+变量a为${a} 
+&lt;!-- ELSE IF[$a==2] --&gt;   
+变量a为${a}  
+&lt;!-- ELSE --&gt;   
+变量a为空   
+&lt;!-- END --&gt;
+		</pre>
+		<div class="preview">
+			<!-- IF[$a==1] -->   
+			变量a为${a} 
+			<!-- ELSE IF[$a==2] -->   
+			变量a为${a}  
+			<!-- ELSE -->   
+			变量a为空   
+			<!-- END -->   
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="title">内部引用</div>
+	<div class="info">
+		<pre class="code">
+引用语法1（兼容Dreamweaver）：&lt;!-- #include file=&quot;/inc/header.html&quot; --&gt;
+
+引用语法2：&#123;inc:/inc2/header}
+引用语法3：&lt;!-- inc:inc2/header --&gt; 
+引用语法4（兼容Smarty）：&#123;include file="/inc2/header_sub"}
+
+
+		</pre>
+
+		<div class="preview">
+			<!-- #include file="/inc2/header_sub.html" -->
+			{inc:/inc2/header_sub}
+			<!-- inc:inc2/header_sub --> 
+			{include file="/inc2/header_sub"}
+		</div>
+	</div>
+</div>
+<div class="item">
+	<div class="title">路径解析</div>
+	<div class="info">
+		<pre class="code">
+通过 $opt['path_replace'] = array('images'); 配置相对路径，程序会自动加上绝对路径。这样的好处是在做页面时，页面可直接浏览器预览
+		</pre>
+		<div class="preview">
+			src="images/aaa.png"
+		</div>
+	</div>
+</div>
+<div class="item">
+	<div class="title">嵌入PHP代码</div>
+	<div class="info">
+		<pre class="code">
+支持多种方式引用php代码：
+<div class="code_sub">&#123;run:}代码{/run}
+&lt;!-- run: --&gt;代码&lt;!-- /run --&gt;
+&lt;!--{代码}--&gt;
+</div>
+时间处理:&#123;run:}echo date(&#x27;Y-m-d H:i&#x27;,time()){/run}  
+&lt;br&gt;   
+时间处理2:&lt;!-- run: --&gt;echo date(&#x27;Y-m-d H:i:s&#x27;,time())&lt;!-- /run --&gt;   
+&lt;br&gt;   
+条件判断1:&#123;run:}if($a==1){echo &#x27;成立&#x27;;}else{echo &#x27;失败&#x27;;}{/run}   
+&lt;br&gt;   
+条件判断2:&lt;!-- run: --&gt;if($a==1){echo &#x27;成立&#x27;;}else{echo &#x27;失败&#x27;;}&lt;!-- /run --&gt;   
+&lt;br&gt;   
+条件判断3:$&#123;($a==1)?&#x27;成立&#x27;:&#x27;失败&#x27;}
+&lt;br&gt;   
+条件判断4:&lt;!--{echo ($a==1)?&#x27;成立&#x27;:&#x27;失败&#x27;;}--&gt; 
+		</pre>
+		<div class="preview">
+			时间处理:{run:}echo date('Y-m-d H:i',time()){/run}  
+			<br>   
+			时间处理2:<!-- run: -->echo date('Y-m-d H:i:s',time())<!-- /run -->   
+			<br>   
+			条件判断1:{run:}if($a==1){echo '成立';}else{echo '失败';}{/run}   
+			<br>   
+			条件判断2:<!-- run: -->if($a==1){echo '成立';}else{echo '失败';}<!-- /run -->   
+			<br>   
+			条件判断3:${($a==1)?'成立':'失败'}
+			<br>   
+			条件判断4:<!--{echo ($a==1)?'成立':'失败';}--> 
+		</div>
+	</div>
+</div>
+
